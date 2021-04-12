@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Parser {
     private String data;
@@ -28,15 +30,18 @@ public class Parser {
         return result.toString();
     }
 
-    public void splitByPound() {
-        String[] stringArray = this.data.split("##");
-        String splitString = "";
+    public String splitByPound() {
+        Pattern pattern = Pattern.compile("[nN][aA][mM][eE][:]\\w+[;]\\w+[:]\\w+[.]\\w+[;]\\w+[:]\\w+[;]\\w+[:][0-9]*?[/][0-9]*?[/][0-9][0-9][0-9][0-9]");
+        Matcher matcher = pattern.matcher(data);
+        String splitData = "";
+        int lastMatchPosition = 0;
+        boolean yes = true;
 
-        for(String string : stringArray) {
-            splitString += string + "\n";
+        while(matcher.find()) {
+            splitData += matcher.group() + "\n";
         }
 
-        this.data = splitString;
+        return splitData;
     }
 
 

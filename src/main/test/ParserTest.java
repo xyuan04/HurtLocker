@@ -10,10 +10,10 @@ public class ParserTest {
         Parser parse = new Parser();
 
         //When
-        parse.splitByPound();
+        String split = parse.splitByPound();
 
         //Then
-        System.out.println(parse.getData());
+        System.out.println(split);
     }
 
 }
