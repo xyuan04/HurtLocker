@@ -26,8 +26,7 @@ public class ParserTest {
 
         //When
         ArrayList<String> split = parse.splitByPound();
-        parse.stringOutput();
-        System.out.println(parse.getOutput());
+        String actual = parse.stringOutput(split);
 
         //Then
         Assert.assertTrue(split.size() == 28);
@@ -40,9 +39,7 @@ public class ParserTest {
 
         //When
         ArrayList<String> split = parse.splitByPound();
-        parse.stringOutput();
-        int counter = parse.counter("[cC][oO][oO][kK][iI][eE][sS]");
-        System.out.println(counter);
+        int counter = parse.counter("[cC][oO][oO][kK][iI][eE][sS]", split);
 
         //Then
         Assert.assertTrue(counter == 7);

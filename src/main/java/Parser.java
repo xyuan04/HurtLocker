@@ -1,36 +1,13 @@
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
     private String data;
-    private ArrayList<String> tempOutputHolder;
-    private String output;
 
     public Parser() {
-        data = loadFile();
-    }
-
-    private String loadFile(){
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("RawData.txt").getFile());
-        StringBuilder result = new StringBuilder("");
-
-        try(Scanner scanner = new Scanner(file)){
-            while(scanner.hasNextLine()){
-                String line = scanner.nextLine();
-                result.append(line).append("\n");
-            }
-
-            scanner.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-
-        return result.toString();
+        IOClass io = new IOClass();
+        data = io.loadFile();
     }
 
     public ArrayList<String> splitByPound() {
@@ -41,43 +18,30 @@ public class Parser {
         while(matcher.find()) {
             stringList.add(matcher.group());
         }
-        tempOutputHolder = stringList;
         return stringList;
     }
 
-    public String stringOutput() {
+    public String stringOutput(ArrayList<String> stringList) {
         String output = "";
 
-        for(String value : tempOutputHolder) {
+        for(String value : stringList) {
             output += String.format("{\n%s\n},\n", value);
         }
 
-        this.output = output;
         return output;
     }
 
-    public int counter(String regex) {
+    public int counter(String regex, ArrayList<String> stringList) {
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(data);
         int counter = 0;
 
-        while(matcher.find()) {
-            counter++;
+        for(String string : stringList) {
+            Matcher matcher = pattern.matcher(string);
+            while (matcher.find()) {
+                counter++;
+            }
         }
         return counter;
     }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public String getOutput() {
-        return output;
-    }
-
 
 }

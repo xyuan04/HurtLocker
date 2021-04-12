@@ -1,4 +1,3 @@
-import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 
 public class Main {
@@ -12,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Engine engine = new Engine();
 
-        engine.writeOutPutFile();
+        engine.io.writeOutPutFile(engine);
         System.out.println(engine);
     }
 }
