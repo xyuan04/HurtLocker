@@ -9,9 +9,10 @@ public class Main {
 //        return result;
 //    }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Engine engine = new Engine();
 
+        engine.writeOutPutFile();
         System.out.println(engine);
     }
 }

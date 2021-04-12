@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class Parser {
     private String data;
-    private ArrayList<String> temp;
+    private ArrayList<String> tempOutputHolder;
     private String output;
 
     public Parser() {
@@ -41,14 +41,14 @@ public class Parser {
         while(matcher.find()) {
             stringList.add(matcher.group());
         }
-        temp = stringList;
+        tempOutputHolder = stringList;
         return stringList;
     }
 
     public String stringOutput() {
         String output = "";
 
-        for(String value : temp) {
+        for(String value : tempOutputHolder) {
             output += String.format("{\n%s\n},\n", value);
         }
 
@@ -78,4 +78,6 @@ public class Parser {
     public String getOutput() {
         return output;
     }
+
+
 }
