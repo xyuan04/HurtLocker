@@ -56,6 +56,16 @@ public class Parser {
         return output;
     }
 
+    public int counter(String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(data);
+        int counter = 0;
+
+        while(matcher.find()) {
+            counter++;
+        }
+        return counter;
+    }
 
     public String getData() {
         return data;
