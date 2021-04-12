@@ -1,11 +1,14 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
     private String data;
+    private ArrayList<String> temp;
+    private String output;
 
     public Parser() {
         data = loadFile();
@@ -30,18 +33,27 @@ public class Parser {
         return result.toString();
     }
 
-    public String splitByPound() {
-        Pattern pattern = Pattern.compile("[nN][aA][mM][eE][:]\\w+[;]\\w+[:]\\w+[.]\\w+[;]\\w+[:]\\w+[;]\\w+[:][0-9]*?[/][0-9]*?[/][0-9][0-9][0-9][0-9]");
+    public ArrayList<String> splitByPound() {
+        Pattern pattern = Pattern.compile("\\w*?[^\\w\\s]\\w*?[^\\w\\s]\\w*?[^\\w\\s]\\w*?[^\\w\\s]\\w*?[^\\w\\s]\\w*?[^\\w\\s]\\w*?[^\\w\\s]\\w+[^\\w\\s][0-9]*?[^\\w\\s][0-9]*?[^\\w\\s][0-9][0-9][0-9][0-9]");
         Matcher matcher = pattern.matcher(data);
-        String splitData = "";
-        int lastMatchPosition = 0;
-        boolean yes = true;
+        ArrayList<String> stringList = new ArrayList<>();
 
         while(matcher.find()) {
-            splitData += matcher.group() + "\n";
+            stringList.add(matcher.group());
+        }
+        temp = stringList;
+        return stringList;
+    }
+
+    public String stringOutput() {
+        String output = "";
+
+        for(String value : temp) {
+            output += String.format("{\n%s\n},\n", value);
         }
 
-        return splitData;
+        this.output = output;
+        return output;
     }
 
 
@@ -51,5 +63,9 @@ public class Parser {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public String getOutput() {
+        return output;
     }
 }
